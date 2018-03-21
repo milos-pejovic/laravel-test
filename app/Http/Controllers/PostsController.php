@@ -43,10 +43,6 @@ class PostsController extends Controller
      *
      */
     public function store() {
-        Post::create([
-            'title' => request('title'),
-            'body' => request('body')
-        ]);
 
         // Without the "use App\Post" we do this
 //        $post = new \App\Post();
@@ -64,25 +60,26 @@ class PostsController extends Controller
         //============================================================
 
         /*
-            Never do teh following!
+            Never do the following!
             It will use ALL the data
 
             Post::create(request()->all());
         */
 
-        Post::create([
-            'title' => request('title'),
-            'body' => request('body')
-        ]);
+//        Post::create([
+//            'title' => request('title'),
+//            'body' => request('body')
+//        ]);
 
-        return redirect('/');
+        Post::create(request(['title', 'body']));
+        return redirect('/posts');
 
         //============================================================
         // request
 
-//        dd(request(['title', 'body']));
 //        dd(request()->all());
 //        dd(request()->title);
+//        dd(request(['title', 'body']));
 
     }
 }
