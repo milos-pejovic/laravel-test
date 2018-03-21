@@ -37,10 +37,19 @@ class PlanesController extends Controller
     public function store()
     {
 
+        $this->validate(request(), [
+            'body' => 'required|min:2|max:1000',
+        ]);
+
         Plane::create([
             'body' => request('body'),
             'active' => (request('active') == 'on') ? true : false
         ]);
+
+//        Plane::create([
+//            'body' => request('body'),
+//            'active' => (request('active') == 'on') ? true : false
+//        ]);
 
 //        dd(request()->all());
 

@@ -18,7 +18,13 @@
                 <input type="checkbox" class="form-control" id="active" name="active" />
             </div>
 
-            <button type="submit" class="btn btn-primary">Save</button>
+            <div class="form-control">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+
+           <div class="form-control">
+               @include('layouts.errors')
+           </div>
 
         </form>
 
