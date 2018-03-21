@@ -14,7 +14,9 @@ class PostsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index() {
-        return view('posts.index');
+//        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::latest()->all();
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -26,7 +28,7 @@ class PostsController extends Controller
      */
     public function show(Post $post) {
 //        return view('posts.show', compact('post'));
-        return view('posts.show');
+        return view('posts.show', compact('post'));
     }
 
     /**
@@ -70,6 +72,12 @@ class PostsController extends Controller
 //            'title' => request('title'),
 //            'body' => request('body')
 //        ]);
+
+        $this->validate(request(), [
+//            'title' => 'reqired|min:2|max:10',
+            'title' => 'required',
+            'body' => 'required'
+        ]);
 
         Post::create(request(['title', 'body']));
         return redirect('/posts');
