@@ -7,6 +7,22 @@ use App\Post;
 
 class PostsController extends Controller
 {
+
+    /**
+     * PostsController constructor.
+     */
+    public function __construct() {
+        // This restrict all the methods in this controller to logged in users.
+//        $this->middleware('auth');
+
+        // This restrict index method in this controller to logged in users
+//        $this->middleware('auth', ['only' => 'index']);
+
+        // This restrict all except index methods in this controller to logged in users
+//        $this->middleware('auth', ['except' => 'index']);
+        $this->middleware('auth')->except(['index', 'show']);
+    }
+
     /**
      * ======================================================================================================
      *  index
@@ -21,7 +37,7 @@ class PostsController extends Controller
 
     /**
      * ======================================================================================================
-     *  index
+     *  show
      * ======================================================================================================
      * @param Post $post
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -68,18 +84,29 @@ class PostsController extends Controller
             Post::create(request()->all());
         */
 
-//        Post::create([
-//            'title' => request('title'),
-//            'body' => request('body')
-//        ]);
+
 
         $this->validate(request(), [
-//            'title' => 'reqired|min:2|max:10',
+//            'title' => 'required|min:2|max:10',
             'title' => 'required',
             'body' => 'required'
         ]);
 
-        Post::create(request(['title', 'body']));
+//        Post::create([
+//            'title' => request('title'),
+//            'body' => request('body'),
+//            'user_id' => auth()->id()
+//        ]);
+
+
+        //============================================================
+        auth()->user()->publish(
+            new Post(request(['title', 'body']))
+        );
+        //============================================================
+
+
+//        Post::create(request(['title', 'body', 'user_id']));
         return redirect('/posts');
 
         //============================================================

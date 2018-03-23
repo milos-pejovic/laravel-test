@@ -2,12 +2,14 @@
 
 @section('content')
 
-    <h1>Planes</h1>
+    <h1><a href="/planes/create">Make a new plane</a></h1>
 
-    @foreach($allPlanes as $plane)
-
-        <li><a href="/planes/{{$plane->id}}">{{$plane->body}}</a></li>
-
+    @foreach($planes as $plane)
+        <div class="list-group-item">
+            <h1><a href="/planes/{{$plane->id}}">{{$plane->plane_name}}</a></h1>
+            <p>{{$plane->body}}</p>
+            <p>{{$plane->created_at->toFormattedDateString()}}</p>
+        </div>
     @endforeach
 
 @endsection
